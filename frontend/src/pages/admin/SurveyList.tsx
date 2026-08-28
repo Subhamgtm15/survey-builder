@@ -34,20 +34,20 @@ export default function SurveyList() {
   const publicUrl = (id: number) => `${window.location.origin}/s/${id}`;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200">
+    <div className="min-h-screen bg-stone-100">
+      <header className="bg-white border-b border-stone-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-900">Surveys</h1>
+          <h1 className="text-xl font-bold text-stone-900">Surveys</h1>
           <div className="flex items-center gap-3">
             <Link
               to="/admin/surveys/new"
-              className="inline-flex items-center gap-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-800"
             >
               <Plus size={16} /> New survey
             </Link>
             <button
               onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-600 hover:bg-slate-100"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-600 hover:bg-stone-100"
             >
               <LogOut size={16} /> Logout
             </button>
@@ -56,15 +56,15 @@ export default function SurveyList() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {isLoading && <p className="text-slate-500">Loading surveys...</p>}
+        {isLoading && <p className="text-stone-500">Loading surveys...</p>}
         {isError && <p className="text-red-600">Failed to load surveys.</p>}
 
         {surveys && surveys.length === 0 && (
-          <div className="text-center py-16 border-2 border-dashed border-slate-200 rounded-xl">
-            <p className="text-slate-500 mb-4">No surveys yet.</p>
+          <div className="text-center py-16 border-2 border-dashed border-stone-200 rounded-2xl">
+            <p className="text-stone-500 mb-4">No surveys yet.</p>
             <Link
               to="/admin/surveys/new"
-              className="inline-flex items-center gap-1.5 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-800"
             >
               <Plus size={16} /> Create your first survey
             </Link>
@@ -75,22 +75,22 @@ export default function SurveyList() {
           {surveys?.map((survey) => (
             <div
               key={survey.id}
-              className="bg-white rounded-xl border border-slate-200 p-5 flex items-center justify-between"
+              className="bg-white rounded-2xl border border-stone-200 p-5 flex items-center justify-between"
             >
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="font-semibold text-slate-900">{survey.title}</h2>
+                  <h2 className="font-semibold text-stone-900">{survey.title}</h2>
                   <span
                     className={`text-xs px-2 py-0.5 rounded-full ${
                       survey.is_published
-                        ? "bg-green-100 text-green-700"
-                        : "bg-slate-100 text-slate-500"
+                        ? "bg-teal-100 text-teal-800"
+                        : "bg-stone-100 text-stone-500"
                     }`}
                   >
                     {survey.is_published ? "Published" : "Draft"}
                   </span>
                 </div>
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-stone-500 mt-1">
                   {survey.questions.length} question(s) · {survey.response_count ?? 0} response(s)
                 </p>
               </div>
@@ -102,7 +102,7 @@ export default function SurveyList() {
                     target="_blank"
                     rel="noreferrer"
                     title="Open public form"
-                    className="p-2 rounded-md text-slate-500 hover:bg-slate-100"
+                    className="p-2 rounded-lg text-stone-500 hover:bg-stone-100"
                   >
                     <ExternalLink size={18} />
                   </a>
@@ -110,21 +110,21 @@ export default function SurveyList() {
                 <Link
                   to={`/admin/surveys/${survey.id}/analytics`}
                   title="Analytics"
-                  className="p-2 rounded-md text-slate-500 hover:bg-slate-100"
+                  className="p-2 rounded-lg text-stone-500 hover:bg-stone-100"
                 >
                   <BarChart3 size={18} />
                 </Link>
                 <Link
                   to={`/admin/surveys/${survey.id}/edit`}
                   title="Edit"
-                  className="p-2 rounded-md text-slate-500 hover:bg-slate-100"
+                  className="p-2 rounded-lg text-stone-500 hover:bg-stone-100"
                 >
                   <Pencil size={18} />
                 </Link>
                 <button
                   onClick={() => handleDelete(survey)}
                   title="Delete"
-                  className="p-2 rounded-md text-red-500 hover:bg-red-50"
+                  className="p-2 rounded-lg text-red-500 hover:bg-red-50"
                 >
                   <Trash2 size={18} />
                 </button>

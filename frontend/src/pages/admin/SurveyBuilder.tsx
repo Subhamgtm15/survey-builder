@@ -120,29 +120,29 @@ export default function SurveyBuilder() {
     }
   };
 
-  if (loading) return <p className="p-8 text-slate-500">Loading...</p>;
+  if (loading) return <p className="p-8 text-stone-500">Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+    <div className="min-h-screen bg-stone-100">
+      <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-slate-900">
+          <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900">
             <ArrowLeft size={16} /> Back
           </Link>
           <div className="flex items-center gap-3">
-            <label className="inline-flex items-center gap-2 text-sm text-slate-700">
+            <label className="inline-flex items-center gap-2 text-sm text-stone-700">
               <input
                 type="checkbox"
                 checked={isPublished}
                 onChange={(e) => setIsPublished(e.target.checked)}
-                className="h-4 w-4"
+                className="h-4 w-4 accent-teal-700"
               />
               Published
             </label>
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-60"
+              className="rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-800 disabled:opacity-60"
             >
               {saving ? "Saving..." : "Save survey"}
             </button>
@@ -152,35 +152,35 @@ export default function SurveyBuilder() {
 
       <main className="max-w-3xl mx-auto px-4 py-8">
         {error && (
-          <div className="mb-4 rounded-md bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
+          <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">
             {error}
           </div>
         )}
 
-        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+        <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-6">
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Survey title"
-            className="w-full text-2xl font-bold text-slate-900 placeholder:text-slate-300 focus:outline-none mb-2"
+            className="w-full text-2xl font-bold text-stone-900 placeholder:text-stone-300 focus:outline-none mb-2"
           />
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description (optional)"
             rows={2}
-            className="w-full text-sm text-slate-600 placeholder:text-slate-300 focus:outline-none resize-none"
+            className="w-full text-sm text-stone-600 placeholder:text-stone-300 focus:outline-none resize-none"
           />
         </div>
 
         <div className="space-y-4">
           {questions.map((q, index) => (
-            <div key={q.id} className="bg-white rounded-xl border border-slate-200 p-5">
+            <div key={q.id} className="bg-white rounded-2xl border border-stone-200 p-5">
               <div className="flex items-start gap-3">
                 <div className="flex flex-col pt-2">
                   <button
                     onClick={() => moveQuestion(index, -1)}
-                    className="text-slate-300 hover:text-slate-600"
+                    className="text-stone-300 hover:text-stone-600"
                     title="Move up"
                   >
                     <GripVertical size={16} />
@@ -193,7 +193,7 @@ export default function SurveyBuilder() {
                       value={q.label}
                       onChange={(e) => updateQuestion(q.id, { label: e.target.value })}
                       placeholder={`Question ${index + 1}`}
-                      className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="flex-1 rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
                     />
                     <select
                       value={q.type}
@@ -206,7 +206,7 @@ export default function SurveyBuilder() {
                           maxRating: replacement.maxRating,
                         });
                       }}
-                      className="rounded-md border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="rounded-lg border border-stone-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-600"
                     >
                       {Object.entries(QUESTION_TYPE_LABELS).map(([value, label]) => (
                         <option key={value} value={value}>
@@ -220,16 +220,16 @@ export default function SurveyBuilder() {
                     <div className="space-y-2 mb-3 pl-1">
                       {q.options?.map((opt, optIndex) => (
                         <div key={optIndex} className="flex items-center gap-2">
-                          <span className="text-slate-400 text-sm">{optIndex + 1}.</span>
+                          <span className="text-stone-400 text-sm">{optIndex + 1}.</span>
                           <input
                             value={opt}
                             onChange={(e) => updateOption(q.id, optIndex, e.target.value)}
-                            className="flex-1 rounded-md border border-slate-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                            className="flex-1 rounded-lg border border-stone-200 px-2 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-teal-500"
                           />
                           {(q.options?.length ?? 0) > 2 && (
                             <button
                               onClick={() => removeOption(q.id, optIndex)}
-                              className="text-slate-300 hover:text-red-500"
+                              className="text-stone-300 hover:text-red-500"
                             >
                               <Trash2 size={15} />
                             </button>
@@ -238,7 +238,7 @@ export default function SurveyBuilder() {
                       ))}
                       <button
                         onClick={() => addOption(q.id)}
-                        className="text-sm text-indigo-600 hover:text-indigo-700 inline-flex items-center gap-1"
+                        className="text-sm text-teal-700 hover:text-teal-800 inline-flex items-center gap-1"
                       >
                         <Plus size={14} /> Add option
                       </button>
@@ -247,11 +247,11 @@ export default function SurveyBuilder() {
 
                   {q.type === "rating" && (
                     <div className="mb-3">
-                      <label className="text-sm text-slate-600 mr-2">Max rating:</label>
+                      <label className="text-sm text-stone-600 mr-2">Max rating:</label>
                       <select
                         value={q.maxRating ?? 5}
                         onChange={(e) => updateQuestion(q.id, { maxRating: Number(e.target.value) })}
-                        className="rounded-md border border-slate-300 px-2 py-1 text-sm bg-white"
+                        className="rounded-lg border border-stone-300 px-2 py-1 text-sm bg-white"
                       >
                         {[3, 4, 5, 7, 10].map((n) => (
                           <option key={n} value={n}>
@@ -262,13 +262,13 @@ export default function SurveyBuilder() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-3">
-                    <label className="inline-flex items-center gap-2 text-sm text-slate-600">
+                  <div className="flex items-center justify-between border-t border-stone-100 pt-3">
+                    <label className="inline-flex items-center gap-2 text-sm text-stone-600">
                       <input
                         type="checkbox"
                         checked={q.required}
                         onChange={(e) => updateQuestion(q.id, { required: e.target.checked })}
-                        className="h-4 w-4"
+                        className="h-4 w-4 accent-teal-700"
                       />
                       Required
                     </label>
@@ -290,7 +290,7 @@ export default function SurveyBuilder() {
             <button
               key={type}
               onClick={() => setQuestions((prev) => [...prev, newQuestion(type)])}
-              className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-700 hover:bg-stone-50"
             >
               <Plus size={15} /> {QUESTION_TYPE_LABELS[type]}
             </button>

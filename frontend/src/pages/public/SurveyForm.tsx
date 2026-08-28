@@ -73,18 +73,18 @@ export default function SurveyForm() {
 
   if (loadError && !survey) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-        <p className="text-slate-600">{loadError}</p>
+      <div className="min-h-screen flex items-center justify-center bg-stone-100 px-4">
+        <p className="text-stone-600">{loadError}</p>
       </div>
     );
   }
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-stone-100 px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Thank you!</h1>
-          <p className="text-slate-500">Your response has been recorded.</p>
+          <h1 className="text-2xl font-bold text-stone-900 mb-2">Thank you!</h1>
+          <p className="text-stone-500">Your response has been recorded.</p>
         </div>
       </div>
     );
@@ -92,24 +92,24 @@ export default function SurveyForm() {
 
   if (!survey) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <p className="text-slate-500">Loading survey...</p>
+      <div className="min-h-screen flex items-center justify-center bg-stone-100">
+        <p className="text-stone-500">Loading survey...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4">
+    <div className="min-h-screen bg-stone-100 py-10 px-4">
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-xl border border-slate-200 p-6 mb-4">
-          <h1 className="text-2xl font-bold text-slate-900">{survey.title}</h1>
-          {survey.description && <p className="text-slate-500 mt-2">{survey.description}</p>}
+        <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-4">
+          <h1 className="text-2xl font-bold text-stone-900">{survey.title}</h1>
+          {survey.description && <p className="text-stone-500 mt-2">{survey.description}</p>}
         </div>
 
         <div className="space-y-4">
           {survey.questions.map((q, index) => (
-            <div key={q.id} className="bg-white rounded-xl border border-slate-200 p-6">
-              <label className="block font-medium text-slate-800 mb-3">
+            <div key={q.id} className="bg-white rounded-2xl border border-stone-200 p-6">
+              <label className="block font-medium text-stone-800 mb-3">
                 {index + 1}. {q.label}
                 {q.required && <span className="text-red-500 ml-1">*</span>}
               </label>
@@ -119,7 +119,7 @@ export default function SurveyForm() {
                   type="text"
                   value={(answers[q.id] as string) ?? ""}
                   onChange={(e) => setAnswer(q.id, e.target.value)}
-                  className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600"
                 />
               )}
 
@@ -128,20 +128,20 @@ export default function SurveyForm() {
                   rows={4}
                   value={(answers[q.id] as string) ?? ""}
                   onChange={(e) => setAnswer(q.id, e.target.value)}
-                  className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+                  className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600 resize-none"
                 />
               )}
 
               {q.type === "single_choice" && (
                 <div className="space-y-2">
                   {q.options?.map((opt) => (
-                    <label key={opt} className="flex items-center gap-2 text-sm text-slate-700">
+                    <label key={opt} className="flex items-center gap-2 text-sm text-stone-700">
                       <input
                         type="radio"
                         name={q.id}
                         checked={answers[q.id] === opt}
                         onChange={() => setAnswer(q.id, opt)}
-                        className="h-4 w-4"
+                        className="h-4 w-4 accent-teal-700"
                       />
                       {opt}
                     </label>
@@ -152,7 +152,7 @@ export default function SurveyForm() {
               {q.type === "multiple_choice" && (
                 <div className="space-y-2">
                   {q.options?.map((opt) => (
-                    <label key={opt} className="flex items-center gap-2 text-sm text-slate-700">
+                    <label key={opt} className="flex items-center gap-2 text-sm text-stone-700">
                       <input
                         type="checkbox"
                         checked={
@@ -160,7 +160,7 @@ export default function SurveyForm() {
                           (answers[q.id] as string[]).includes(opt)
                         }
                         onChange={() => toggleMulti(q.id, opt)}
-                        className="h-4 w-4"
+                        className="h-4 w-4 accent-teal-700"
                       />
                       {opt}
                     </label>
@@ -175,10 +175,10 @@ export default function SurveyForm() {
                       key={n}
                       type="button"
                       onClick={() => setAnswer(q.id, n)}
-                      className={`h-10 w-10 rounded-md border text-sm font-medium ${
+                      className={`h-10 w-10 rounded-lg border text-sm font-medium ${
                         answers[q.id] === n
-                          ? "bg-indigo-600 text-white border-indigo-600"
-                          : "bg-white text-slate-600 border-slate-300 hover:border-indigo-400"
+                          ? "bg-teal-700 text-white border-teal-700"
+                          : "bg-white text-stone-600 border-stone-300 hover:border-teal-500"
                       }`}
                     >
                       {n}
@@ -195,7 +195,7 @@ export default function SurveyForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-6 w-full rounded-md bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-60"
+          className="mt-6 w-full rounded-lg bg-teal-700 px-4 py-3 text-sm font-semibold text-white hover:bg-teal-800 disabled:opacity-60"
         >
           {submitting ? "Submitting..." : "Submit response"}
         </button>
