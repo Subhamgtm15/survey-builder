@@ -1,8 +1,10 @@
-# Survey Builder
+# Surveyor — a dynamic survey builder
 
-A full-stack application for creating dynamic surveys, collecting public responses, and viewing per-question analytics.
+Surveyor is a small full-stack app I built as a take-home project. Admins design surveys from a handful of question types, share a public link, collect responses, and see the results summarised per question.
 
-Built with **React + TypeScript + Vite + Tailwind CSS** (frontend) and **Node.js + Express + PostgreSQL** (backend).
+The thing I cared about most was making the survey *structure* dynamic: an admin can invent any combination of questions and the public form just renders it, with no code changes and no new database tables. Everything about a survey lives in one flexible schema.
+
+Frontend is React + TypeScript (Vite + Tailwind); the backend is Node + Express on top of PostgreSQL.
 
 ## Live Demo
 
@@ -105,6 +107,22 @@ Open `http://localhost:5173/admin`, log in with the seed admin, create and publi
 - **Database:** Neon (managed PostgreSQL). Set `DATABASE_URL` on the backend.
 - **Backend:** Render web service (`npm run migrate` once, then `npm start`).
 - **Frontend:** Vercel. Set `VITE_API_URL` to the Render URL.
+
+## What I learned building this
+
+A few things I hadn't really done before this project:
+
+- **Rendering forms from a schema instead of hardcoding them.** This was the big one. The survey is just a JSON array of questions, and the public form loops over it and picks the right input for each type (text, choice, rating, and so on). Adding a new question type is mostly one more branch in the render, not a new table or migration.
+- **Storing flexible data in Postgres with JSONB.** I used to reach for extra tables any time data had a "variable shape". Here I learned JSONB lets me keep the whole survey (and each response) as a single document keyed by question id, and still query it. It genuinely changed how I decide when a relational table is worth it.
+- **Validating the same data twice, for different reasons.** The client validates for fast feedback, but the client can always be bypassed, so the server re-checks every answer against the survey schema and is the real source of truth. It also drops any answer keys it doesn't recognise before saving.
+- **JWT auth across two different origins.** Getting a Vercel frontend and a Render backend to talk to each other made me actually understand CORS, preflight requests, and why I went with a Bearer token in a header rather than cookies.
+- **Actually shipping it, not just running it locally.** Wiring up Neon → Render → Vercel, handling SSL on the managed database, setting `trust proxy` so rate limiting works behind Render's proxy, and juggling environment variables per platform.
+
+## What I'd add with more time
+
+- **Survey versioning** — right now, editing a published survey changes the schema underneath responses that already came in. I'd snapshot the schema per response so old answers always render against the version they were answered with.
+- **Partial / resumable responses** — let a user save a draft as they fill the form.
+- **Pagination** on the survey list and analytics once there's real volume.
 
 ## Tech Stack
 
