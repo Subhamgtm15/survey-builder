@@ -6,10 +6,8 @@ import type { Question, AnswerMap } from "../types/survey.js";
 
 const router = express.Router();
 
-// All routes here require an authenticated admin.
 router.use(authMiddleware);
 
-// POST /surveys — create a new survey.
 router.post("/", async (req: AuthRequest, res: Response) => {
   const { title, description, questions, isPublished } = req.body;
   if (!title || typeof title !== "string" || !title.trim()) {
@@ -36,7 +34,6 @@ router.post("/", async (req: AuthRequest, res: Response) => {
   }
 });
 
-// GET /surveys — list all surveys with response counts.
 router.get("/", async (_req: AuthRequest, res: Response) => {
   try {
     const result = await pool.query(
@@ -53,7 +50,6 @@ router.get("/", async (_req: AuthRequest, res: Response) => {
   }
 });
 
-// GET /surveys/:id — fetch a single survey (for editing).
 router.get("/:id", async (req: AuthRequest, res: Response) => {
   try {
     const result = await pool.query("SELECT * FROM surveys WHERE id = $1", [req.params.id]);
@@ -67,7 +63,6 @@ router.get("/:id", async (req: AuthRequest, res: Response) => {
   }
 });
 
-// PUT /surveys/:id — update an existing survey.
 router.put("/:id", async (req: AuthRequest, res: Response) => {
   const { title, description, questions, isPublished } = req.body;
   if (!title || typeof title !== "string" || !title.trim()) {
@@ -104,7 +99,6 @@ router.put("/:id", async (req: AuthRequest, res: Response) => {
   }
 });
 
-// DELETE /surveys/:id — remove a survey and its responses (cascade).
 router.delete("/:id", async (req: AuthRequest, res: Response) => {
   try {
     const result = await pool.query("DELETE FROM surveys WHERE id = $1 RETURNING id", [
@@ -120,7 +114,6 @@ router.delete("/:id", async (req: AuthRequest, res: Response) => {
   }
 });
 
-// GET /surveys/:id/analytics — aggregate response insights per question.
 router.get("/:id/analytics", async (req: AuthRequest, res: Response) => {
   try {
     const surveyResult = await pool.query("SELECT * FROM surveys WHERE id = $1", [req.params.id]);
@@ -137,7 +130,6 @@ router.get("/:id/analytics", async (req: AuthRequest, res: Response) => {
     const answerMaps: AnswerMap[] = responseResult.rows.map((r: { answers: AnswerMap }) => r.answers);
     const total = answerMaps.length;
 
-    // Build per-question aggregates tailored to each question type.
     const insights = questions.map((q) => {
       const values = answerMaps
         .map((a) => a[q.id])
@@ -172,7 +164,6 @@ router.get("/:id/analytics", async (req: AuthRequest, res: Response) => {
         };
       }
 
-      // Free-text: return the raw answers so the admin can read them.
       return {
         questionId: q.id,
         label: q.label,

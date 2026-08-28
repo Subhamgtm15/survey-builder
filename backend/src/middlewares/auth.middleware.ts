@@ -5,7 +5,6 @@ export interface AuthRequest extends Request {
   admin?: { adminId: number };
 }
 
-// Verifies the Bearer JWT sent by the admin panel and attaches the admin id.
 export const authMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
   const header = req.headers.authorization;
   const token = header?.startsWith("Bearer ") ? header.slice(7) : null;

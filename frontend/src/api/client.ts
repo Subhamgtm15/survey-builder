@@ -7,14 +7,12 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Attach the admin Bearer token to every request when present.
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Log the admin out automatically if the token is rejected.
 api.interceptors.response.use(
   (res) => res,
   (error) => {

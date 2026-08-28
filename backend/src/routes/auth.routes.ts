@@ -6,7 +6,6 @@ import { loginLimiter } from "../middlewares/rateLimit.middleware.js";
 
 const router = express.Router();
 
-// POST /auth/login — admin authentication, returns a Bearer JWT.
 router.post("/login", loginLimiter, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {

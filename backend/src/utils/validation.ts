@@ -11,8 +11,6 @@ const VALID_TYPES: QuestionType[] = [
 
 const CHOICE_TYPES: QuestionType[] = ["single_choice", "multiple_choice"];
 
-// Normalizes and validates the admin-supplied question array before it is stored.
-// Returns cleaned questions (each with a stable id) or throws with a clear message.
 export function sanitizeQuestions(input: unknown): Question[] {
   if (!Array.isArray(input) || input.length === 0) {
     throw new Error("A survey must have at least one question.");
@@ -54,8 +52,6 @@ export function sanitizeQuestions(input: unknown): Question[] {
   });
 }
 
-// Validates a submitted answer map against a survey's questions.
-// Returns an array of error messages (empty when valid).
 export function validateAnswers(questions: Question[], answers: AnswerMap): string[] {
   const errors: string[] = [];
 

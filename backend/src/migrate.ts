@@ -9,7 +9,6 @@ dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Applies the schema, then seeds a default admin so the panel is usable immediately.
 async function migrate() {
   const sql = readFileSync(join(__dirname, "../migrations/0000_init.sql"), "utf-8");
   await pool.query(sql);
@@ -19,7 +18,6 @@ async function migrate() {
   const password = process.env.SEED_ADMIN_PASSWORD ?? "admin123";
   const hashed = await bcrypt.hash(password, 10);
 
-  // ON CONFLICT keeps the migration idempotent if run more than once.
   await pool.query(
     `INSERT INTO admins (email, password) VALUES ($1, $2)
      ON CONFLICT (email) DO NOTHING`,

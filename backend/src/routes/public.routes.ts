@@ -6,8 +6,6 @@ import type { Question, AnswerMap } from "../types/survey.js";
 
 const router = express.Router();
 
-// GET /public/surveys/:id — fetch a published survey for the public form.
-// Only published surveys are exposed, and no admin-only fields are returned.
 router.get("/surveys/:id", async (req, res) => {
   try {
     const result = await pool.query(
@@ -24,7 +22,6 @@ router.get("/surveys/:id", async (req, res) => {
   }
 });
 
-// POST /public/surveys/:id/responses — submit a response (rate limited).
 router.post("/surveys/:id/responses", submitLimiter, async (req, res) => {
   const answers = req.body?.answers as AnswerMap;
   if (!answers || typeof answers !== "object") {
@@ -46,7 +43,6 @@ router.post("/surveys/:id/responses", submitLimiter, async (req, res) => {
       return res.status(400).json({ message: "Validation failed.", errors });
     }
 
-    // Persist only answers for known question ids to avoid storing junk keys.
     const validIds = new Set(questions.map((q) => q.id));
     const cleanAnswers: AnswerMap = {};
     for (const [key, value] of Object.entries(answers)) {

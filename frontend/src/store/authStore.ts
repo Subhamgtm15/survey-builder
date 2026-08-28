@@ -8,7 +8,6 @@ interface AuthState {
 
 const STORAGE_KEY = "survey_admin_token";
 
-// Admin JWT is kept in localStorage so the session survives page reloads.
 export const useAuthStore = create<AuthState>((set) => ({
   token: localStorage.getItem(STORAGE_KEY),
   setToken: (token) => {

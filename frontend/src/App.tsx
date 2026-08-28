@@ -7,7 +7,6 @@ import Analytics from "./pages/admin/Analytics";
 import SurveyForm from "./pages/public/SurveyForm";
 import type { JSX } from "react";
 
-// Gates admin routes behind a valid token; otherwise redirects to login.
 function RequireAuth({ children }: { children: JSX.Element }) {
   const token = useAuthStore((s) => s.token);
   return token ? children : <Navigate to="/admin/login" replace />;
@@ -16,10 +15,8 @@ function RequireAuth({ children }: { children: JSX.Element }) {
 export default function App() {
   return (
     <Routes>
-      {/* Public survey form */}
       <Route path="/s/:id" element={<SurveyForm />} />
 
-      {/* Admin */}
       <Route path="/admin/login" element={<Login />} />
       <Route
         path="/admin"

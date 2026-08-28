@@ -10,9 +10,8 @@ export interface Question {
   type: QuestionType;
   label: string;
   required: boolean;
-  options?: string[]; // single_choice / multiple_choice
-  maxRating?: number; // rating (defaults to 5)
+  options?: string[];
+  maxRating?: number;
 }
 
-// Map of questionId -> answer value.
 export type AnswerMap = Record<string, string | string[] | number>;

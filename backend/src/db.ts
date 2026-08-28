@@ -5,8 +5,6 @@ dotenv.config();
 
 const { Pool } = pg;
 
-// In production a single DATABASE_URL is provided (Neon/Render) and requires SSL.
-// Locally we fall back to the individual DB_* variables.
 export const pool = process.env.DATABASE_URL
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
