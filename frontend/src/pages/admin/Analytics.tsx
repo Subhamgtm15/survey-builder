@@ -12,6 +12,7 @@ import {
   YAxis,
 } from "recharts";
 import { getAnalytics } from "../../api/client";
+import Logo from "../../components/Logo";
 import type { QuestionInsight } from "../../types";
 
 const BAR_COLORS = ["#0d9488", "#f59e0b", "#e07a5f", "#2a9d8f", "#457b9d", "#e9c46a"];
@@ -85,10 +86,13 @@ export default function Analytics() {
     <div className="min-h-screen bg-stone-100">
       <header className="bg-white border-b border-stone-200">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900">
-            <ArrowLeft size={16} /> Back
-          </Link>
-          <h1 className="font-semibold text-stone-900">{data?.survey.title ?? "Analytics"}</h1>
+          <div className="flex items-center gap-4">
+            <Logo showText={false} />
+            <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900">
+              <ArrowLeft size={16} /> Back
+            </Link>
+          </div>
+          <h1 className="font-display font-semibold text-stone-900">{data?.survey.title ?? "Analytics"}</h1>
         </div>
       </header>
 

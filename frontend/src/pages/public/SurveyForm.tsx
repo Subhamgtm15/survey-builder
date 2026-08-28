@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPublicSurvey, submitResponse } from "../../api/client";
+import Logo from "../../components/Logo";
 import type { AnswerMap, AnswerValue, Question, Survey } from "../../types";
 
 export default function SurveyForm() {
@@ -83,7 +84,7 @@ export default function SurveyForm() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-100 px-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-stone-900 mb-2">Thank you!</h1>
+          <h1 className="font-display text-2xl font-semibold text-stone-900 mb-2">Thank you!</h1>
           <p className="text-stone-500">Your response has been recorded.</p>
         </div>
       </div>
@@ -100,9 +101,12 @@ export default function SurveyForm() {
 
   return (
     <div className="min-h-screen bg-stone-100 py-10 px-4">
+      <div className="max-w-2xl mx-auto mb-4">
+        <Logo />
+      </div>
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl border border-stone-200 p-6 mb-4">
-          <h1 className="text-2xl font-bold text-stone-900">{survey.title}</h1>
+          <h1 className="font-display text-3xl font-semibold text-stone-900">{survey.title}</h1>
           {survey.description && <p className="text-stone-500 mt-2">{survey.description}</p>}
         </div>
 

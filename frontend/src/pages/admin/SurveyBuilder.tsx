@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft, GripVertical, Plus, Trash2 } from "lucide-react";
 import { createSurvey, getSurvey, updateSurvey } from "../../api/client";
+import Logo from "../../components/Logo";
 import { QUESTION_TYPE_LABELS } from "../../types";
 import type { Question, QuestionType } from "../../types";
 
@@ -126,9 +127,12 @@ export default function SurveyBuilder() {
     <div className="min-h-screen bg-stone-100">
       <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900">
-            <ArrowLeft size={16} /> Back
-          </Link>
+          <div className="flex items-center gap-4">
+            <Logo showText={false} />
+            <Link to="/admin" className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900">
+              <ArrowLeft size={16} /> Back
+            </Link>
+          </div>
           <div className="flex items-center gap-3">
             <label className="inline-flex items-center gap-2 text-sm text-stone-700">
               <input

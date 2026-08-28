@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/client";
 import { useAuthStore } from "../../store/authStore";
+import Logo from "../../components/Logo";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,8 +36,11 @@ export default function Login() {
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-stone-200 p-8"
       >
-        <h1 className="text-2xl font-bold text-stone-900 mb-1">Admin Login</h1>
-        <p className="text-sm text-stone-500 mb-6">Sign in to manage surveys.</p>
+        <div className="mb-6 flex justify-center">
+          <Logo />
+        </div>
+        <h1 className="font-display text-2xl font-semibold text-stone-900 mb-1 text-center">Admin Login</h1>
+        <p className="text-sm text-stone-500 mb-6 text-center">Sign in to manage surveys.</p>
 
         {error && (
           <div className="mb-4 rounded-lg bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-700">

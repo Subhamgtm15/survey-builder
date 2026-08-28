@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { BarChart3, Pencil, Plus, Trash2, ExternalLink, LogOut } from "lucide-react";
 import { deleteSurvey, listSurveys } from "../../api/client";
 import { useAuthStore } from "../../store/authStore";
+import Logo from "../../components/Logo";
 import type { Survey } from "../../types";
 
 export default function SurveyList() {
@@ -37,7 +38,7 @@ export default function SurveyList() {
     <div className="min-h-screen bg-stone-100">
       <header className="bg-white border-b border-stone-200">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-stone-900">Surveys</h1>
+          <Logo />
           <div className="flex items-center gap-3">
             <Link
               to="/admin/surveys/new"
@@ -56,6 +57,7 @@ export default function SurveyList() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-8">
+        <h1 className="font-display text-3xl font-semibold text-stone-900 mb-6">Surveys</h1>
         {isLoading && <p className="text-stone-500">Loading surveys...</p>}
         {isError && <p className="text-red-600">Failed to load surveys.</p>}
 
