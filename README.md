@@ -6,11 +6,12 @@ Built with **React + TypeScript + Vite + Tailwind CSS** (frontend) and **Node.js
 
 ## Live Demo
 
-- **App (admin panel):** _add your Vercel URL here_ → `/admin`
-- **API:** _add your Render URL here_
+- **App (admin panel):** https://survey-builder-omega.vercel.app/admin
+- **Public form example:** https://survey-builder-omega.vercel.app/s/1
+- **API:** https://survey-builder-uyso.onrender.com
 - **Demo video:** _add link here (optional)_
 
-Default admin (from the seed): `admin@survey.app` / `admin123`
+Default admin (for the live demo): `admin@survey.app` / `SurveyAdmin2026!`
 
 ## Features
 
