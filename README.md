@@ -110,13 +110,13 @@ Open `http://localhost:5173/admin`, log in with the seed admin, create and publi
 
 ## What I learned building this
 
-A few things I hadn't really done before this project:
+A few concrete things I understand a lot better after this project:
 
-- **Rendering forms from a schema instead of hardcoding them.** This was the big one. The survey is just a JSON array of questions, and the public form loops over it and picks the right input for each type (text, choice, rating, and so on). Adding a new question type is mostly one more branch in the render, not a new table or migration.
-- **Storing flexible data in Postgres with JSONB.** I used to reach for extra tables any time data had a "variable shape". Here I learned JSONB lets me keep the whole survey (and each response) as a single document keyed by question id, and still query it. It genuinely changed how I decide when a relational table is worth it.
-- **Validating the same data twice, for different reasons.** The client validates for fast feedback, but the client can always be bypassed, so the server re-checks every answer against the survey schema and is the real source of truth. It also drops any answer keys it doesn't recognise before saving.
-- **JWT auth across two different origins.** Getting a Vercel frontend and a Render backend to talk to each other made me actually understand CORS, preflight requests, and why I went with a Bearer token in a header rather than cookies.
-- **Actually shipping it, not just running it locally.** Wiring up Neon → Render → Vercel, handling SSL on the managed database, setting `trust proxy` so rate limiting works behind Render's proxy, and juggling environment variables per platform.
+- **Rendering a form from data instead of hardcoding it.** A survey is stored as an array of question objects (`{ id, type, label, required, options }`). The public form maps over that array and, based on each question's `type`, renders the matching input — a text box, radio buttons, checkboxes, or rating buttons. So the form builds itself from the data; adding a question type is one more case in the render, not a new form.
+- **Using JSONB to store variable-shaped data.** Because every survey has a different set of questions, I store the questions (and each response's answers) as a JSONB column instead of spreading them across extra tables. Answers are keyed by question id, so reading an answer is just `answers[questionId]`. The trade-off I can explain: I give up some database-level integrity, so I enforce correctness in code instead.
+- **Why the server has to validate too.** The form validates in the browser for quick feedback, but since anyone can call the API directly, the server re-validates every answer against the survey's real questions — required fields, valid options, a number in range for ratings — and only saves answers for question ids it recognises.
+- **Turning raw answers into analytics.** For each question I look at all the responses and summarise by type: choice questions become option counts, ratings become an average plus a distribution, and text questions return the list of answers. That's what feeds the charts.
+- **JWT auth between two separate origins.** Login returns a signed token; the frontend sends it as a `Bearer` header and the backend verifies it on every admin route. Because the frontend (Vercel) and backend (Render) are on different domains, I also had to set the allowed CORS origin so the browser would let the requests through.
 
 ## What I'd add with more time
 
